@@ -38,4 +38,4 @@ int main()
 	}
 	end = time(NULL);
 	cout <<"Time taken = " <<difftime(end, begin) << endl;
-}	
+}
