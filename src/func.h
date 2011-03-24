@@ -14,7 +14,7 @@ using namespace std;
 
 void bwt(string, vector<string> &);
 
-void mtf(string, string &);
+void mtf(string, string &); // have to add frequency calculation!!!!!
 
 // void huffman
 
