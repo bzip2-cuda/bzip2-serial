@@ -16,7 +16,9 @@ void bwt(string, vector<string> &);
 
 void mtf(string, string &); // have to add frequency calculation!!!!!
 
-// void huffman
+template<typename DataType, typename Frequency> class Hufftree;
+
+ostream& operator<<(ostream&, vector<bool>);
 
 //void file-hasher MD5 / SHA / base64?
 
@@ -27,5 +29,11 @@ void mtf(string, string &); // have to add frequency calculation!!!!!
 //store block size (100 kB)
 
 //void file-padder (also adds beginning and end markers)
+
+//file-opener
+
+//file-reader
+
+//file-closer
 
 #endif
