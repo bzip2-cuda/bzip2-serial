@@ -236,3 +236,17 @@ std::ostream& operator<<(std::ostream& os, std::vector<bool> vec)
 	std::copy(vec.begin(), vec.end(), std::ostream_iterator<bool>(os, ""));
 	return os;
 }
+
+void readFile(string &line) //have to replace getline with something more feasible.
+{
+    if (argc < 2) { help(argv[0]); return 1; }
+    std::vector<std::string> file;
+    file.clear();
+    std::ifstream infile (argv[1], std::ios_base::in);
+    while (getline(infile, line, '\n'))
+    {
+        file.push_back (line);
+    }
+
+    //std::cout << "Read " << file.size() << " lines.\n";
+}

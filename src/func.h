@@ -30,10 +30,6 @@ ostream& operator<<(ostream&, vector<bool>);
 
 //void file-padder (also adds beginning and end markers)
 
-//file-opener
-
-//file-reader
-
-//file-closer
+void readFile(string &);
 
 #endif
