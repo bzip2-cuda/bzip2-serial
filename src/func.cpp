@@ -25,8 +25,6 @@ void bwt(string word, vector<string> &rotations)
 	}
 	
 	sort (rotations.begin(), rotations.end());
-	
-	return rotations;
 }
 
 void mtf(string word, string &list, std::map<char, double> &frequencies)
@@ -239,6 +237,7 @@ std::ostream& operator<<(std::ostream& os, std::vector<bool> vec)
 	return os;
 }
 
+/*
 void readFile(string &line) //have to replace getline with something more feasible.
 {
     if (argc < 2) { help(argv[0]); return 1; }
@@ -252,3 +251,4 @@ void readFile(string &line) //have to replace getline with something more feasib
 
     //std::cout << "Read " << file.size() << " lines.\n";
 }
+*/
