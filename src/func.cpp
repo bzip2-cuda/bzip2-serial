@@ -33,7 +33,7 @@ void bwt(string word, string &bwt_word)
 	}
 }
 
-void mtf(string word, string &list, std::map<char, double> &frequencies)
+void mtf(string word, string &list, map<char, double> &frequencies)
 {
 	int i, index;
 	for (i = 0; i != 256; i++)
@@ -50,7 +50,7 @@ void mtf(string word, string &list, std::map<char, double> &frequencies)
 		{
 			if (word[i] == list[index])
 		    {
-			    frequencies[int(word[i])]++; //frequencies[char(index)]++; //***
+			    frequencies[word[i]]++; //frequencies[char(index)]++; //***
 				break;
 			}
 		}
@@ -60,6 +60,14 @@ void mtf(string word, string &list, std::map<char, double> &frequencies)
 			list[index] = list[index-1];
 		}
 		list[0] = word[i];
+	}
+	
+	for (i = 0; i < 255; i++)
+	{
+	    if(frequencies[char(i)] == 0)
+	    {
+	        ; //delete entry for i from string &list, map<char, double> &frequencies.
+	    }
 	}
 }
 
@@ -72,21 +80,21 @@ template<typename DataType, typename Frequency> class Hufftree
 		~Hufftree() { delete tree; }
 
 		template<typename InputIterator>
-		std::vector<bool> encode(InputIterator begin, InputIterator end);
+		vector<bool> encode(InputIterator begin, InputIterator end);
 
-		std::vector<bool> encode(DataType const& value)
+		vector<bool> encode(DataType const& value)
 		{
 			return encoding[value];
 		}
 
 		template<typename OutputIterator>
-		void decode(std::vector<bool> const& v, OutputIterator iter);
+		void decode(vector<bool> const& v, OutputIterator iter);
 
 	private:
 		class Node;
 		Node* tree;
 
-		typedef std::map<DataType, std::vector<bool> > encodemap;
+		typedef map<DataType, vector<bool> > encodemap;
 		encodemap encoding;
 
 		class NodeOrder;
@@ -129,8 +137,8 @@ template<typename DataType, typename Frequency> struct Hufftree<DataType, Freque
 		}
 	}
 
-	void fill(std::map<DataType, std::vector<bool> >& encoding,
-	std::vector<bool>& prefix)
+	void fill(map<DataType, vector<bool> >& encoding,
+	vector<bool>& prefix)
 	{
 	if (leftChild)
 	{
@@ -150,7 +158,7 @@ template<typename InputIterator>
 Hufftree<DataType, Frequency>::Hufftree(InputIterator begin, InputIterator end):
 tree(0)
 {
-	std::priority_queue<Node*, std::vector<Node*>, NodeOrder> pqueue;
+	priority_queue<Node*, vector<Node*>, NodeOrder> pqueue;
 
 	while (begin != end)
 	{
@@ -175,7 +183,7 @@ tree(0)
 		}
 	}
 
-	std::vector<bool> bitvec;
+	vector<bool> bitvec;
 	tree->fill(encoding, bitvec);
 
 }
@@ -211,9 +219,9 @@ struct Hufftree<DataType, Frequency>::NodeOrder
 
 template<typename DataType, typename Frequency>
 template<typename InputIterator>
-std::vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, InputIterator end)
+vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, InputIterator end)
 {
-	std::vector<bool> result;
+	vector<bool> result;
 	while (begin != end)
 	{
 		typename encodemap::iterator i = encoding.find(*begin);
@@ -225,10 +233,10 @@ std::vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, Inp
 
 template<typename DataType, typename Frequency>
 template<typename OutputIterator>
-void Hufftree<DataType, Frequency>::decode(std::vector<bool> const& v, OutputIterator iter)
+void Hufftree<DataType, Frequency>::decode(vector<bool> const& v, OutputIterator iter)
 {
 	Node* node = tree;
-	for (std::vector<bool>::const_iterator i = v.begin(); i != v.end(); ++i)
+	for (vector<bool>::const_iterator i = v.begin(); i != v.end(); ++i)
 	{
 		node = *i? node->rightChild : node->leftChild;
 		if (!node -> leftChild)
@@ -239,9 +247,9 @@ void Hufftree<DataType, Frequency>::decode(std::vector<bool> const& v, OutputIte
 	}
 }
 
-std::ostream& operator<<(std::ostream& os, std::vector<bool> vec)
+ostream& operator<<(ostream& os, vector<bool> vec)
 {
-	std::copy(vec.begin(), vec.end(), std::ostream_iterator<bool>(os, ""));
+	copy(vec.begin(), vec.end(), ostream_iterator<bool>(os, ""));
 	return os;
 }
 
@@ -249,14 +257,14 @@ std::ostream& operator<<(std::ostream& os, std::vector<bool> vec)
 void readFile(string &line) //have to replace getline with something more feasible.
 {
     if (argc < 2) { help(argv[0]); return 1; }
-    std::vector<std::string> file;
+    vector<string> file;
     file.clear();
-    std::ifstream infile (argv[1], std::ios_base::in);
+    ifstream infile (argv[1], ios_base::in);
     while (getline(infile, line, '\n'))
     {
         file.push_back (line);
     }
 
-    //std::cout << "Read " << file.size() << " lines.\n";
+    //cout << "Read " << file.size() << " lines.\n";
 }
 */
