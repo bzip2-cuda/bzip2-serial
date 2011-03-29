@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 	string list, word;
-	int counter, index;
+	int i, index;
 	time_t begin, end;
 	cout <<"Enter word to perform mtf with ";
 	cin >> word;
@@ -17,18 +17,18 @@ int main()
 	begin = time(NULL);
 	for (; k < 1000; k++)
 	{
-		for (counter = 0; counter != 256; counter++)
+		for (i = 0; i != 256; i++)
 		{
 			string list1;
-			list1 = char(counter);
+			list1 = char(i);
 			list = list + list1;
 		}
 		//Comparing character with the string
-		for (counter = 0; counter < word.length(); counter++)
+		for (i = 0; i < word.length(); i++)
 		{
 			for (index = 0; ; index++)                 //scan the whole array, no need of end condition
 			{
-				if (word[counter] == list[index]) //till we found it
+				if (word[i] == list[index]) //till we found it
 					break;    //then, break the for
 			}
 			//Putting found byte in front
@@ -36,10 +36,10 @@ int main()
 			{	
 				list[index] = list[index-1];  //move all of them to the right
 			}
-			list[0] = word[counter];                      //update the order 0
+			list[0] = word[i];                      //update the order 0
 		}
-		for (counter = 0; counter <= word.length() && k == 0; counter++)
-			cout << counter << "\t" << list[counter] << endl;
+		for (i = 0; i <= word.length() && k == 0; i++)
+			cout << i << "\t" << list[i] << endl;
 	}
 	end = time(NULL);
 	cout <<"Time taken = " <<difftime(end, begin) << endl;

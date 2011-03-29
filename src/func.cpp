@@ -29,21 +29,23 @@ void bwt(string word, vector<string> &rotations)
 	return rotations;
 }
 
-void mtf(string word, string &list)
+void mtf(string word, string &list, std::map<char, double> &frequencies)
 {
-	int counter, index;
-	for (counter = 0; counter != 256; counter++)
+	int i, index;
+	for (i = 0; i != 256; i++)
 	{
 		string list1;
-		list1 = char(counter);
+		list1 = char(i);
+		frequencies[char(i)] = 0; //***
 		list = list + list1;
 	}
 	
-	for (counter = 0; counter < word.length(); counter++)
+	for (i = 0; i < word.length(); i++)
 	{
-		for (index = 0; ; index++)
+		for (index = 0; index != 256 ; index++)
 		{
-			if (word[counter] == list[index])
+			if (word[i] == list[index])
+			    frequencies[char(index)]++; //***
 				break;
 		}
 		
@@ -51,7 +53,7 @@ void mtf(string word, string &list)
 		{	
 			list[index] = list[index-1];
 		}
-		list[0] = word[counter];
+		list[0] = word[i];
 	}
 }
 
