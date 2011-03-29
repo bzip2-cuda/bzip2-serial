@@ -10,21 +10,18 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    string word;
+    string word, bwt_word;
     int len;
-    vector<string> rotations;
     
     cout << "Hello user!\nPlease enter a string: ";
     cin >> word;
     len = word.length();
     
-    bwt(word, rotations);
+    bwt(word, bwt_word);
     
-    cout << "BWT done. Result:\n";
-    for(int i = 0; i < len; i++)
-	{
-		cout << "\t" <<rotations[i][rotations[i].length()-1] << endl;
-	}
+    cout << "BWT done. Result: " << bwt_word << endl;
+	
+	
     
     return 0;
 }

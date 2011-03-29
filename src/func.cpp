@@ -9,9 +9,10 @@
 
 using namespace std;
 
-void bwt(string word, vector<string> &rotations)
+void bwt(string word, string &bwt_word)
 {
 	int len, i, j;
+	vector<string> rotations;
 	
 	rotations.push_back (word);
 	len  = word.length();
@@ -25,6 +26,11 @@ void bwt(string word, vector<string> &rotations)
 	}
 	
 	sort (rotations.begin(), rotations.end());
+	
+	for(int i = 0; i < len; i++)
+	{
+		bwt_word[i] = rotations[i][rotations[i].length()-1];
+	}
 }
 
 void mtf(string word, string &list, std::map<char, double> &frequencies)
@@ -44,7 +50,7 @@ void mtf(string word, string &list, std::map<char, double> &frequencies)
 		{
 			if (word[i] == list[index])
 		    {
-			    frequencies[char(index)]++; //***
+			    frequencies[int(word[i])]++; //frequencies[char(index)]++; //***
 				break;
 			}
 		}

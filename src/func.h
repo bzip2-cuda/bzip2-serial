@@ -12,9 +12,9 @@
 
 using namespace std;
 
-void bwt(string, vector<string> &);
+void bwt(string, string &);
 
-void mtf(string, string &);
+void mtf(string, string &, std::map<char, double> &);
 
 template<typename DataType, typename Frequency> class Hufftree;
 
