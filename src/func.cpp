@@ -14,7 +14,7 @@ void bwt(string word, string &bwt_word)
 	int len, i, j;
 	vector<string> rotations;
 	
-	rotations.push_back (word);
+	rotations.push_back(word);
 	len  = word.length();
 	
 	for (i = 1; i < len; i++)
@@ -29,7 +29,7 @@ void bwt(string word, string &bwt_word)
 	
 	for(int i = 0; i < len; i++)
 	{
-		bwt_word[i] = rotations[i][rotations[i].length()-1];
+		bwt_word += rotations[i][rotations[i].length()-1];
 	}
 }
 
