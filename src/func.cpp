@@ -43,8 +43,10 @@ void mtf(string word, string &list, std::map<char, double> &frequencies)
 		for (index = 0; index != 256 ; index++)
 		{
 			if (word[i] == list[index])
+		    {
 			    frequencies[char(index)]++; //***
 				break;
+			}
 		}
 		
 		for ( ; index != 0; index--)
