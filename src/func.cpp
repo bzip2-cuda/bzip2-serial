@@ -33,7 +33,7 @@ void bwt(string word, string &bwt_word)
 	}
 }
 
-void mtf(string word, string &list, map<char, double> &frequencies)
+void mtf(string &word, string &list, map<char, double> &frequencies)
 {
 	int i, index;
 	for (i = 0; i != 256; i++)
@@ -68,6 +68,20 @@ void mtf(string word, string &list, map<char, double> &frequencies)
 	    {
 	        ; //delete entry for i from string &list, map<char, double> &frequencies.
 	    }
+	}
+	
+	//MTF encoding
+	for (i = 0; i < word.length(); i++)
+	{
+		for (index = 0; index != 256 ; index++)
+		{
+			if (word[i] == list[index])
+			{
+				word[i]=char(index);
+				cout << word[i];
+				break;
+			}
+		}
 	}
 }
 

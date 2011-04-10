@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 	
 	mtf(bwt_word, mtf_list, huffman_freq);
 	
-	cout << "MTF done. Result:\n";
+	cout << "MTF done. Result:\n" << bwt_word << endl;
     
     return 0;
 }
