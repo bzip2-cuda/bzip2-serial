@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <time.h>
 
-#include "func.h"
+#include "bzip2.h"
+#include "file.h"
 
 using namespace std;
 
