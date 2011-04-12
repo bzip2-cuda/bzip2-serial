@@ -12,13 +12,13 @@
 
 using namespace std;
 
-void bwt(string, string &);
-
-void mtf(string &, string &, std::map<char, double> &);
-
 template<typename DataType, typename Frequency> class Hufftree;
 
 ostream& operator<<(ostream&, vector<bool>);
+
+void bwt(string, string &);
+
+void mtf(string &, string &, std::map<char, double> &);
 
 //void file-hasher MD5 / SHA / base64?
 
