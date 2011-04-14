@@ -16,14 +16,15 @@ void readFile(int, char**, string &);
 
 void writeFile(int, char**, string );
 
-//void file-hasher MD5 / SHA / base64?
+//void makeHeader();
 
-//store original file name
-
-//store block location table
-
-//store block size (100 kB)
-
-//void file-padder (also adds beginning and end markers)
+/*
+Header:
+    MD5 hash
+    original file name
+    block location table
+    block size (12 B)
+    file-padder and adder of beginning and end markers
+*/
 
 #endif
