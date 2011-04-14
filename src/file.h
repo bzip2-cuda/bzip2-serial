@@ -14,7 +14,7 @@ using namespace std;
 
 void readFile(int, char**, string &);
 
-void writeFile(int, char**, string &);
+void writeFile(int, char**, string );
 
 //void file-hasher MD5 / SHA / base64?
 

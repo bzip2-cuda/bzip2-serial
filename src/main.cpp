@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -23,20 +24,25 @@ int main(int argc, char* argv[])
     readFile(argc, argv, word);
     len = word.length();
     
-    cout << "Input file read done. Result:\n" << word << endl;
+    //cout << "Input file read done. Result:\n" << word << endl;
     
     bwt(word, bwt_word);
     
-    cout << "BWT done. Result: " << bwt_word << endl;
+    //cout << "BWT done. Result: " << bwt_word << endl;
 	
 	mtf(bwt_word, mtf_list, huffman_freq);
 	
-	cout << "MTF done. Result: " << bwt_word << endl;
+	//cout << "MTF done. Result: " << bwt_word << endl;
 	
 	Hufftree<char, double> hufftree(huffman_freq.begin(), huffman_freq.end());
     huffman_word = hufftree.encode(bwt_word.begin(), bwt_word.end());
     
-    cout << "Huffman done. Result: " << huffman_word << endl;
+    //cout << "Huffman done. Result: " << huffman_word << endl;
+    
+    ostringstream ss;
+    ss << huffman_word;
+    
+    writeFile(argc, argv, ss.str());
     
     return 0;
 }

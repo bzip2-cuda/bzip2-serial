@@ -8,7 +8,7 @@
 #include <ostream>
 #include <iterator>
 
-#define USAGE cout << "Usage: ./main INPUTFILE" << endl
+#define USAGE cout << "Usage: cbz2 INPUTFILE" << endl
 
 using namespace std;
 
@@ -32,14 +32,41 @@ void readFile(int argc, char* argv[], string &output)
         infile.close();
         delete[] memblock;
     }
-    else cout << "Unable to open file.\n";
-    exit(1);
+    else
+    {
+        cout << "Unable to open file.\n";
+        exit(1);
+    }
 }
 
-void writeFile(int argc, char* argv[], string &output)
+void writeFile(int argc, char* argv[], string input)
 {
+    if (argc < 2)
+    {
+        USAGE;
+        exit(1);
+    }
+    
     string filename;
     filename += argv[1];
     filename += ".cbz2";
-    cout << filename << endl;
+    
+    char *fname = &filename[0];
+    
+    ofstream outfile (fname, ios::out|ios::binary);//|ios::ate);
+    
+    if (outfile.is_open())
+    {
+        char *memblock = &input[0];
+        ofstream::pos_type size = input.length();
+        
+        //outfile.seekg(0, ios::beg);
+        outfile.write(memblock, size);
+        outfile.close();
+    }
+    else
+    {
+        cout << "Unable to open file.\n";
+        exit(1);
+    }
 }
