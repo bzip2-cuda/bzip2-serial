@@ -12,7 +12,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     string word, bwt_word, mtf_list;
-    vector<string> huffman_word;
+    vector<bool> huffman_word;
     std::map<char, double> huffman_freq;
     int len;
     
@@ -29,11 +29,9 @@ int main(int argc, char* argv[])
 	cout << "MTF done. Result: " << bwt_word << endl;
 	
 	Hufftree<char, double> hufftree(huffman_freq.begin(), huffman_freq.end());
-	
-	for (int i = 0; i < bwt_word.length(); i++)
-	{
-	    huffman_word.push_back(hufftree.encode(bwt_word[i]));
-	}
+    huffman_word = hufftree.encode(bwt_word.begin(), bwt_word.end());
+    
+    cout << "Huffman done. Result: " << huffman_word << endl;
     
     return 0;
 }
