@@ -16,9 +16,14 @@ int main(int argc, char* argv[])
     std::map<char, double> huffman_freq;
     int len;
     
-    cout << "Hello user!\nPlease enter a string: ";
+    /*cout << "Hello user!\nPlease enter a string: ";
     cin >> word;
+    len = word.length();*/
+    
+    readFile(argc, argv, word);
     len = word.length();
+    
+    cout << "Input file read done. Result:\n" << word << endl;
     
     bwt(word, bwt_word);
     

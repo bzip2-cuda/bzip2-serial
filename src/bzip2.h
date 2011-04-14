@@ -194,16 +194,4 @@ void bwt(string, string &);
 
 void mtf(string &, string &, std::map<char, double> &);
 
-//void file-hasher MD5 / SHA / base64?
-
-//store original file name
-
-//store block location table
-
-//store block size (100 kB)
-
-//void file-padder (also adds beginning and end markers)
-
-void readFile(string &);
-
 #endif
