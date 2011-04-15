@@ -2,6 +2,7 @@
 #define FILE_H
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -9,6 +10,7 @@
 #include <queue>
 #include <ostream>
 #include <iterator>
+#include <cstdlib>
 
 using namespace std;
 
@@ -16,7 +18,9 @@ void readFile(int, char**, string &);
 
 void writeFile(int, char**, string );
 
-//void makeHeader();
+void md5(string, string&);
+
+void makeHeader(int, char**);
 
 /*
 Header:

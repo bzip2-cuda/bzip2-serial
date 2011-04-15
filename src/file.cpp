@@ -7,18 +7,15 @@
 #include <queue>
 #include <ostream>
 #include <iterator>
+#include <cstdlib>
 
-#define USAGE cout << "Usage: cbz2 INPUTFILE" << endl
+#define USAGE if (argc != 2) { cout << "Usage: cbz2 INPUTFILE" << endl; exit(1); }
 
 using namespace std;
 
 void readFile(int argc, char* argv[], string &output)
 {
-    if (argc < 2)
-    {
-        USAGE;
-        exit(1);
-    }
+    USAGE;
     
     ifstream infile (argv[1], ios::in|ios::binary|ios::ate);
     
@@ -41,14 +38,9 @@ void readFile(int argc, char* argv[], string &output)
 
 void writeFile(int argc, char* argv[], string input)
 {
-    if (argc < 2)
-    {
-        USAGE;
-        exit(1);
-    }
+    USAGE;
     
-    string filename;
-    filename += argv[1];
+    string filename = argv[1];
     filename += ".cbz2";
     
     char *fname = &filename[0];
@@ -69,4 +61,40 @@ void writeFile(int argc, char* argv[], string input)
         cout << "Unable to open file.\n";
         exit(1);
     }
+}
+
+void md5(string data, string &md5sum)
+{
+    string input = "echo \'";
+    input += data;
+    input += "\' | md5sum > tmp";
+    char *p = &input[0];
+    system(p);
+    
+    ifstream infile ("tmp", ios::in|ios::binary|ios::ate);
+
+    if (infile.is_open())
+    {
+        ifstream::pos_type size = infile.tellg();
+        char *memblock = new char [size];
+        infile.seekg(0, ios::beg);
+        infile.read(memblock, size);
+        string temp = memblock;
+        string output (temp, 0, temp.length() - 5);
+        md5sum = output;//cout << output << endl;
+        infile.close();
+        delete[] memblock;
+    }
+    else
+    {
+        cout << "Unable to open file.\n";
+        exit(1);
+    }
+}
+
+void makeHeader(int argc, char *argv[])
+{
+    USAGE;
+    
+    string filename = argv[1];
 }
