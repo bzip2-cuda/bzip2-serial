@@ -220,13 +220,13 @@ void mtf(string &word, string &list, map<char, double> &frequencies)
 		list[0] = word[i];
 	}
 	
-	for (i = 0; i < 255; i++)
+	/*for (i = 0; i < 255; i++)
 	{
 	    if(frequencies[char(i)] == 0)
 	    {
 	        ; //delete entry for i from string &list, map<char, double> &frequencies.
 	    }
-	}
+	}*/
 	
 	//MTF encoding
 	for (i = 0; i < word.length(); i++)
