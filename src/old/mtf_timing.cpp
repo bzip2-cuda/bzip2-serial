@@ -8,13 +8,13 @@
 
 using namespace std;
 
-#define N 1000 //reps
+#define N 10000 //reps
 
 #define USAGE if (argc != 2) { cout << "Usage: cbz2 INPUTFILE" << endl; exit(1); }
 
 int main(int argc, char *argv[])
 {
-	string list, word;
+	string list, word, word1;
 	time_t begin, end;
 	map<char, double> freq;
 	
@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 	USAGE;
 	
 	word = argv[1];
+	word1 = word;
 	
 	for (int i = 0; i != 256; i++)
 	{
@@ -36,9 +37,11 @@ int main(int argc, char *argv[])
 	}
 	
 	begin = time(NULL);
-	for (int k = 0; k < N; k++)
+	for (long int k = 0; k < N; k++)
 	{
 	    mtf(word, list, freq);
+            //cout << word << endl;
+            word = word1;
 	}
 	end = time(NULL);
 	cout <<"Time taken = " <<difftime(end, begin) << "\nIterations = " << N << endl;
