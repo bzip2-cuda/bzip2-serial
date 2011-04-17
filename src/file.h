@@ -49,7 +49,7 @@ public:
         {
             block location table
             file-padder and adder of beginning and end markers
-        }
+        } // IDEAL IS A BLOCK SIZE OF 256 MB, SO THAT CUDA CAN ALSO COMFORTABLY HANDLE THE BLOCKS
     */
 };
 #endif
