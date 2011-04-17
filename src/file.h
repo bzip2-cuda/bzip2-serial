@@ -45,9 +45,11 @@ public:
     Header:
         MD5 hash
         original file name
-        block location table
-        block size (12 B)
-        file-padder and adder of beginning and end markers
+        if (blocks == 1) //because string::max_size() is 1073741820, which is nearly 1 GB (~0.999999996 GB)
+        {
+            block location table
+            file-padder and adder of beginning and end markers
+        }
     */
 };
 #endif
