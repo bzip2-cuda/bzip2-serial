@@ -12,37 +12,34 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    string word, bwt_word, mtf_list;
-    vector<bool> huffman_word;
+    string data, bwt_data, mtf_list;
+    vector<bool> huffman_data;
     std::map<char, double> huffman_freq;
-    int len;
+    int dataLength;
+    fileHandler file(argc, argv);
     
-    /*cout << "Hello user!\nPlease enter a string: ";
-    cin >> word;
-    len = word.length();*/
+    file.readFile(data);
+    dataLength = data.length();
     
-    readFile(argc, argv, word);
-    len = word.length();
+    //cout << "Input file read done. Result:\n" << data << endl;
     
-    //cout << "Input file read done. Result:\n" << word << endl;
+    bwt(data, bwt_data);
     
-    bwt(word, bwt_word);
-    
-    //cout << "BWT done. Result: " << bwt_word << endl;
+    //cout << "BWT done. Result: " << bwt_data << endl;
 	
-	mtf(bwt_word, mtf_list, huffman_freq);
+	mtf(bwt_data, mtf_list, huffman_freq);
 	
-	//cout << "MTF done. Result: " << bwt_word << endl;
+	//cout << "MTF done. Result: " << bwt_data << endl;
 	
 	Hufftree<char, double> hufftree(huffman_freq.begin(), huffman_freq.end());
-    huffman_word = hufftree.encode(bwt_word.begin(), bwt_word.end());
+    huffman_data = hufftree.encode(bwt_data.begin(), bwt_data.end());
     
-    //cout << "Huffman done. Result: " << huffman_word << endl;
+    //cout << "Huffman done. Result: " << huffman_data << endl;
     
     ostringstream ss;
-    ss << huffman_word;
+    ss << huffman_data;
     
-    writeFile(argc, argv, ss.str());
+    file.writeFile(ss.str());
     
     return 0;
 }
