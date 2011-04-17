@@ -9,15 +9,14 @@
 #include <iterator>
 #include <cstdlib>
 
-#define USAGE if (argC != 2) { cout << "Usage: cbz2 INPUTFILE" << endl; exit(1); }
-
 using namespace std;
+
 class fileHandler
 {
 private:
     /*int argC;
     char *argV[];*/
-    string inFile, outFile;
+    string inFile, outFile, md5sum;
     char *iF, *oF;
 public:
     fileHandler(int argC, char *argV[])
@@ -74,7 +73,7 @@ public:
         }
     }
 
-    void md5(string data, string &md5sum)
+    void md5(string data)
     {
         string input = "echo \'";
         input += data;
