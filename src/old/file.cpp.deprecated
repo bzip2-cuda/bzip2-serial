@@ -1,3 +1,4 @@
+//DEPRECATED, SEE src/file.h
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -13,12 +14,6 @@ using namespace std;
 
 class fileHandler
 {
-private:
-    /*int argC;
-    char *argV[];*/
-    string inFile, outFile, md5sum;
-    char *iF, *oF;
-public:
     fileHandler(int argC, char *argV[])
     {
         if (argC != 2)
@@ -100,6 +95,11 @@ public:
             cout << "Unable to open file.\n";
             exit(1);
         }
+    }
+
+    void fileHandler::makeBlockTable(string blocks[], string &table)
+    {
+        ;
     }
 
     void makeHeader()
