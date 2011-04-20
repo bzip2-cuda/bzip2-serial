@@ -22,44 +22,16 @@ Header:
 #include <ostream>
 #include <iterator>
 #include <cstdlib>
+#include <sstream>
+#include <boost/regex.hpp>
 
 using namespace std;
-
-/*class fileHandler
-{
-private:
-    string inFile, outFile;
-    char *iF, *oF;
-public:
-    fileHandler(int argC, char*argV[])
-    {
-        if (argC != 2)
-        {
-            cout << "Usage: cbz2 INPUTFILE" << endl;
-            exit(1);
-        }
-        inFile = argV[1];
-        outFile = inFile;
-        outFile += ".cbz2";
-        iF = &inFile[0];
-        oF = &outFile[0];
-    }
-    void readFile(string &);
-
-    void writeFile(string );
-
-    void md5(string, string&);
-    
-    void makeBlocks(string*, string&);
-
-    void makeHeader();
-};*/
 
 class fileHandler
 {
 private:
-    string inFile, outFile;
-    string md5sum;
+    string inFile, outFile, outputForFile;
+    string md5sum, blockTable;
     char *iF, *oF;
 public:
     fileHandler(int argC, char *argV[])
@@ -86,32 +58,35 @@ public:
             infile.seekg(0, ios::beg);
             infile.read(memblock, size);
             output += memblock;
+            /*stderr::*///cout << memblock << endl;
             infile.close();
             delete[] memblock;
+            //md5(output);////////////////////
         }
         else
         {
-            cout << "Unable to open file.\n";
+            cout << "Unable to open file for reading.\n";
             exit(1);
         }
     }
 
-    void writeFile(string input)
+    void writeFile()
     {
         ofstream outfile (oF, ios::out|ios::binary);//|ios::ate);
         
         if (outfile.is_open())
         {
-            char *memblock = &input[0];
-            ofstream::pos_type size = input.length();
+            char *memblock = &outputForFile[0];
+            ofstream::pos_type size = outputForFile.length();
             
             //outfile.seekg(0, ios::beg);
             outfile.write(memblock, size);
+            //delete[] memblock;
             outfile.close();
         }
         else
         {
-            cout << "Unable to open file.\n";
+            cout << "Unable to open file for writing.\n";
             exit(1);
         }
     }
@@ -136,6 +111,7 @@ public:
             string output (temp, 0, temp.length() - 5);
             md5sum = output;//cout << output << endl;
             infile.close();
+            system("rm tmp");
             delete[] memblock;
         }
         else
@@ -145,14 +121,18 @@ public:
         }
     }
 
-    void makeBlockTable(string blocks[], string &table)
+    /*void makeBlockTable(string blocks[])
     {
         ;
-    }
+    }*/
 
-    void makeHeader()
+    void makeHeader(string compressedData)
     {
-        ;
+        outputForFile += inFile;
+        outputForFile += "\n";
+        //outputForFile += md5sum;///////////////
+        outputForFile += "\n";
+        outputForFile += compressedData; //compressedData has to be RLEd
     }
 };
 #endif
