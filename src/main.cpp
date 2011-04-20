@@ -9,40 +9,64 @@
 #include "rle.h"
 #include "file.h"
 
+#define BLOCK_SIZE 128
+
 using namespace std;
+
+void compress(fileHandler);
 
 int main(int argc, char* argv[])
 {
-    string data, bwt_data, mtf_list;
-    vector<bool> huffman_data;
-    std::map<char, double> huffman_freq;
-    int dataLength;
     fileHandler file(argc, argv);
     
+    while(!(file.infile.eof()))
+    {
+        string data, bwt_data, mtf_list;
+        vector<bool> huffman_data;
+        std::map<char, double> huffman_freq;
+        ostringstream ss;
+        
+        file.readFile(data, BLOCK_SIZE);
+        //int dataLength = data.length();
+        //INSERT PADDING CODE HERE?
+        bwt(data, bwt_data);
+        mtf(bwt_data, mtf_list, huffman_freq);
+        Hufftree<char, double> hufftree(huffman_freq.begin(), huffman_freq.end());
+        huffman_data = hufftree.encode(bwt_data.begin(), bwt_data.end());
+        ss << huffman_data;
+        string compressedData = encodeRLE(ss.str());
+        file.makeHeader(compressedData);
+    }
+    file.writeFile();
+    
+    return 0;
+}
+    
+    /*THIS IS THE OLD WAY AND HAS BEEN REJECTED FOR GOBBLING STACK
     file.readFile(data);
     dataLength = data.length();
     
-    /*stderr::*///cout << "Input file read done. Result:\n" << data << endl;
+    //cout << "Input file read done. Result:\n" << data << endl;
     
     bwt(data, bwt_data);
     
-    /*stderr::*///cout << "BWT done. Result: " << bwt_data << endl;
+    //cout << "BWT done. Result: " << bwt_data << endl;
 	
 	mtf(bwt_data, mtf_list, huffman_freq);
 	
-	/*stderr::*///cout << "MTF done. Result: " << bwt_data << endl;
+	//cout << "MTF done. Result: " << bwt_data << endl;
 	
 	Hufftree<char, double> hufftree(huffman_freq.begin(), huffman_freq.end());
     huffman_data = hufftree.encode(bwt_data.begin(), bwt_data.end());
     
-    /*stderr::*///cout << "Huffman done. Result: " << huffman_data << endl;
+    //cout << "Huffman done. Result: " << huffman_data << endl;
     
     ostringstream ss;
     ss << huffman_data;
 
     string compressedData = encodeRLE(ss.str());
 
-    /*stderr::*///cout << "RLE done. Result: " << compressedData << endl;
+    //cout << "RLE done. Result: " << compressedData << endl;
     
     file.makeHeader(compressedData);
 
@@ -50,4 +74,4 @@ int main(int argc, char* argv[])
     
     return 0;
 }
-
+*/
