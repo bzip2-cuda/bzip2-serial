@@ -35,6 +35,8 @@ Retrieved from: http://en.literateprograms.org/Huffman_coding_(C_Plus_Plus)?oldi
 #include <iterator>
 #include <string>
 
+using namespace std;
+
 template<typename DataType, typename Frequency> class Hufftree
 {
 	public:
@@ -44,21 +46,21 @@ template<typename DataType, typename Frequency> class Hufftree
 		~Hufftree() { delete tree; }
 
 		template<typename InputIterator>
-		std::vector<bool> encode(InputIterator begin, InputIterator end);
+		vector<bool> encode(InputIterator begin, InputIterator end);
 
-		std::vector<bool> encode(DataType const& value)
+		vector<bool> encode(DataType const& value)
 		{
 			return encoding[value];
 		}
 
 		template<typename OutputIterator>
-		void decode(std::vector<bool> const& v, OutputIterator iter);
+		void decode(vector<bool> const& v, OutputIterator iter);
 
 	private:
 		class Node;
 		Node* tree;
 
-		typedef std::map<DataType, std::vector<bool> > encodemap;
+		typedef map<DataType, vector<bool> > encodemap;
 		encodemap encoding;
 
 		class NodeOrder;
@@ -103,8 +105,8 @@ struct Hufftree<DataType, Frequency>::Node
 		}
 	}
 
-	void fill(std::map<DataType, std::vector<bool> >& encoding,
-	std::vector<bool>& prefix)
+	void fill(map<DataType, vector<bool> >& encoding,
+	vector<bool>& prefix)
 	{
 	if (leftChild)
 	{
@@ -124,7 +126,7 @@ template<typename InputIterator>
 Hufftree<DataType, Frequency>::Hufftree(InputIterator begin, InputIterator end):
 tree(0)
 {
-	std::priority_queue<Node*, std::vector<Node*>, NodeOrder> pqueue;
+	priority_queue<Node*, vector<Node*>, NodeOrder> pqueue;
 
 	while (begin != end)
 	{
@@ -149,7 +151,7 @@ tree(0)
 		}
 	}
 
-	std::vector<bool> bitvec;
+	vector<bool> bitvec;
 	tree->fill(encoding, bitvec);
 
 }
@@ -185,9 +187,9 @@ struct Hufftree<DataType, Frequency>::NodeOrder
 
 template<typename DataType, typename Frequency>
 template<typename InputIterator>
-std::vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, InputIterator end)
+vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, InputIterator end)
 {
-	std::vector<bool> result;
+	vector<bool> result;
 	while (begin != end)
 	{
 		typename encodemap::iterator i = encoding.find(*begin);
@@ -199,10 +201,10 @@ std::vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, Inp
 
 template<typename DataType, typename Frequency>
 template<typename OutputIterator>
-void Hufftree<DataType, Frequency>::decode(std::vector<bool> const& v, OutputIterator iter)
+void Hufftree<DataType, Frequency>::decode(vector<bool> const& v, OutputIterator iter)
 {
 	Node* node = tree;
-	for (std::vector<bool>::const_iterator i = v.begin(); i != v.end(); ++i)
+	for (vector<bool>::const_iterator i = v.begin(); i != v.end(); ++i)
 	{
 		node = *i? node->rightChild : node->leftChild;
 		if (!node -> leftChild)
@@ -213,58 +215,58 @@ void Hufftree<DataType, Frequency>::decode(std::vector<bool> const& v, OutputIte
 	}
 }
 
-std::ostream& operator<<(std::ostream& os, std::vector<bool> vec)
+ostream& operator<<(ostream& os, vector<bool> vec)
 {
-	std::copy(vec.begin(), vec.end(), std::ostream_iterator<bool>(os, ""));
+	copy(vec.begin(), vec.end(), ostream_iterator<bool>(os, ""));
 	return os;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-	std::map<char, double> frequencies;
-		frequencies['e'] = 0.124167;
-		frequencies['a'] = 0.0820011;
-		frequencies['t'] = 0.0969225;
-		frequencies['i'] = 0.0768052;
-		frequencies['n'] = 0.0764055;
-		frequencies['o'] = 0.0714095;
-		frequencies['s'] = 0.0706768;
-		frequencies['r'] = 0.0668132;
-		frequencies['l'] = 0.0448308;
-		frequencies['d'] = 0.0363709;
-		frequencies['h'] = 0.0350386;
-		frequencies['c'] = 0.0344391;
-		frequencies['u'] = 0.028777;
-		frequencies['m'] = 0.0281775;
-		frequencies['f'] = 0.0235145;
-		frequencies['p'] = 0.0203171;
-		frequencies['y'] = 0.0189182;
-		frequencies['g'] = 0.0181188;
-		frequencies['w'] = 0.0135225;
-		frequencies['v'] = 0.0124567;
-		frequencies['b'] = 0.0106581;
-		frequencies['k'] = 0.00393019;
-		frequencies['x'] = 0.00219824;
-		frequencies['j'] = 0.0019984;
-		frequencies['q'] = 0.0009325;
-		frequencies['z'] = 0.000599;
+	map<char, double> frequencies;
+	frequencies['e'] = 0.124167;
+	frequencies['a'] = 0.0820011;
+	frequencies['t'] = 0.0969225;
+	frequencies['i'] = 0.0768052;
+	frequencies['n'] = 0.0764055;
+	frequencies['o'] = 0.0714095;
+	frequencies['s'] = 0.0706768;
+	frequencies['r'] = 0.0668132;
+	frequencies['l'] = 0.0448308;
+	frequencies['d'] = 0.0363709;
+	frequencies['h'] = 0.0350386;
+	frequencies['c'] = 0.0344391;
+	frequencies['u'] = 0.028777;
+	frequencies['m'] = 0.0281775;
+	frequencies['f'] = 0.0235145;
+	frequencies['p'] = 0.0203171;
+	frequencies['y'] = 0.0189182;
+	frequencies['g'] = 0.0181188;
+	frequencies['w'] = 0.0135225;
+	frequencies['v'] = 0.0124567;
+	frequencies['b'] = 0.0106581;
+	frequencies['k'] = 0.00393019;
+	frequencies['x'] = 0.00219824;
+	frequencies['j'] = 0.0019984;
+	frequencies['q'] = 0.0009325;
+	frequencies['z'] = 0.000599;
 
 	Hufftree<char, double> hufftree(frequencies.begin(), frequencies.end());
 
 	for (char ch = 'a'; ch <= 'z'; ++ch)
 	{
-		std::cout << ch << ": " << hufftree.encode(ch) << "\n";
+		cout << ch << ": " << hufftree.encode(ch) << "\n";
 	}
 
-	std::string source = "bananas";
+	string source = argv[1];
 
-	std::cout << "Original: " << source << "\n";
+	cout << "Original: " << source << "\n";
 
-	std::vector<bool> encoded = hufftree.encode(source.begin(), source.end());
-	std::cout << "Encoded: " << encoded << "\n";
+	vector<bool> encoded = hufftree.encode(source.begin(), source.end());
+	cout << "Encoded: " << encoded << "\n";
 
-	std::string destination;
-	hufftree.decode(encoded, std::back_inserter(destination));
-	std::cout << "Decoded: " << destination << "\n";
+	string destination;
+	hufftree.decode(encoded, back_inserter(destination));
+	cout << "Decoded: " << destination << "\n";
 
 }
