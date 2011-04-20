@@ -23,7 +23,6 @@ int main(int argc, char* argv[])
     dataLength = data.length();
     
     /*stderr::*///cout << "Input file read done. Result:\n" << data << endl;
-    cout << data;
     
     bwt(data, bwt_data);
     

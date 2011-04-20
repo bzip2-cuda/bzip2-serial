@@ -91,7 +91,7 @@ public:
         }
     }
 
-    void md5(string data)
+    void md5(string &data)
     {
         string input = "echo \'";
         input += data;
@@ -126,7 +126,7 @@ public:
         ;
     }*/
 
-    void makeHeader(string compressedData)
+    void makeHeader(string &compressedData)
     {
         outputForFile += inFile;
         outputForFile += "\n";

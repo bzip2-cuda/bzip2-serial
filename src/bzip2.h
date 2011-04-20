@@ -188,10 +188,86 @@ void Hufftree<DataType, Frequency>::decode(vector<bool> const& v, OutputIterator
 	}
 }
 
-ostream& operator<<(ostream&, vector<bool>);
+ostream& operator<<(ostream& os, vector<bool> vec)
+{
+	copy(vec.begin(), vec.end(), ostream_iterator<bool>(os, ""));
+	return os;
+}
 
-void bwt(string, string &);
+void mtf(string &word, string &list, map<char, double> &frequencies)
+{
+	int i, index;
+	for (i = 0; i != 256; i++)
+	{
+		string list1;
+		list1 = char(i);
+		frequencies[char(i)] = 0; //***
+		list = list + list1;
+	}
+	
+	for (i = 0; i < word.length(); i++)
+	{
+		for (index = 0; index != 256 ; index++)
+		{
+			if (word[i] == list[index])
+		    {
+			    frequencies[word[i]]++; //frequencies[char(index)]++; //***
+				break;
+			}
+		}
+		
+		for ( ; index != 0; index--)
+		{	
+			list[index] = list[index-1];
+		}
+		list[0] = word[i];
+	}
+	
+	/*for (i = 0; i < 255; i++)
+	{
+	    if(frequencies[char(i)] == 0)
+	    {
+	        ; //delete entry for i from string &list, map<char, double> &frequencies.
+	    }
+	}*/
+	
+	//MTF encoding
+	for (i = 0; i < word.length(); i++)
+	{
+		for (index = 0; index != 256 ; index++)
+		{
+			if (word[i] == list[index])
+			{
+				word[i]=char(index);
+				//cout << word[i];
+				break;
+			}
+		}
+	}
+}
 
-void mtf(string &, string &, std::map<char, double> &);
+void bwt(string &word, string &bwt_word)
+{
+	int len, i, j;
+	vector<string> rotations;
+	
+	rotations.push_back(word);
+	len  = word.length();
+	
+	for (i = 1; i < len; i++)
+	{	
+		string rot_word;
+		rot_word.append(word.substr(i, len -1));
+		rot_word.append(word.substr(0, i));
+		rotations.push_back (rot_word);
+	}
+	
+	sort (rotations.begin(), rotations.end());
+	
+	for(int i = 0; i < len; i++)
+	{
+		bwt_word += rotations[i][rotations[i].length()-1];
+	}
+}
 
 #endif
