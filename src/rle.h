@@ -1,6 +1,8 @@
 #ifndef RLE_H
 #define RLE_H
 
+//http://rosettacode.org/wiki/Run-length_encoding#C.2B.2B
+
 #include <iostream>
 #include <string>
 #include <sstream>
