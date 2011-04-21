@@ -1,16 +1,7 @@
-/*
-Header:
-    MD5 hash
-    original file name
-    if(blocks == 1) //because string::max_size() is 1073741820, which is nearly 1 GB(~0.999999996 GB)
-    {
-        block location table
-        file-padder and adder of beginning and end markers
-    } // IDEAL IS A BLOCK SIZE OF 256 MB, SO THAT CUDA CAN ALSO COMFORTABLY HANDLE THE BLOCKS
-*/
-    
 #ifndef FILE_H
 #define FILE_H
+
+//Header containing the file-handling class
 
 #include <iostream>
 #include <fstream>
@@ -27,7 +18,7 @@ Header:
 
 using namespace std;
 
-class fileHandler
+class fileHandler //Class containing the file-handling data structures and functions
 {
 private:
     string inFile, outFile, outputForFile;
@@ -37,7 +28,7 @@ public:
     ifstream infile;
     ifstream::pos_type fileSize;
     ofstream outfile;
-    fileHandler(int argC, char *argV[])
+    fileHandler(int argC, char *argV[]) //Constructor. Checks argc for correct program usage, opens input and output files, initialises data
     {
         if(argC != 2)
         {
@@ -61,13 +52,13 @@ public:
         outputForFile += "\n";
     }
     
-    ~fileHandler()
+    ~fileHandler() //Destructor. Closes the input and output files. Default destructor takes care of clean-up.
     {
         infile.close();
         outfile.close();
     }
     
-    void readFile(string &output, int size)
+    void readFile(string &output, int size) //Reads size amount of data from file into output
     {
         if(infile.is_open())
         {
@@ -84,7 +75,7 @@ public:
         }
     }
 
-    void writeFile()
+    void writeFile() //Writes output into file
     {
         if(outfile.is_open())
         {
@@ -103,10 +94,10 @@ public:
         }
     }
 
-    void md5()
+    void md5() //Calculates MD5 hash for input file
     {
         string command = "cat ";
-        command += iF; //We do the md5sum for the whole input file
+        command += iF;
         command += " | md5sum > tmp";
         char *p = &command[0];
         system(p);
@@ -133,9 +124,9 @@ public:
         }
     }
     
-    void makeHeader(string &compressedData)
+    void makeHeader(string &compressedData) //Adds data to the output for file
     {
-        outputForFile += compressedData; //compressedData has to be RLEd
+        outputForFile += compressedData;
         outputForFile += "\n";
     }
 };

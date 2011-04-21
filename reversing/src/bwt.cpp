@@ -1,3 +1,5 @@
+//Burrows-Wheeler Transform and the reverse
+
 # include <iostream>
 #include <iostream>
 #include <vector>
@@ -54,14 +56,6 @@ void bwt_reverse(string word, string bwt_word)
 			word = rotations[i];
 	}
 	cout <<"Original word: " << word << endl;
-/*
-create empty table
-
-repeat length(s) times
-insert s as a column of table before first column of the table
-sort rows of the table alphabetically
-return (row that ends with the 'EOF' character)
-*/
 }
 
 int main(int argc, char *argv[])

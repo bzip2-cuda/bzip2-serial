@@ -1,5 +1,7 @@
-#ifndef FUNC_H
-#define FUNC_H
+#ifndef BZIP2_H
+#define BZIP2_H
+
+//Header containing the bzip2 functions (Burrows-Wheeler Transform, Move-To-Front Transform, Huffman Encoding) and associated data structures, templatized to allow use with any datatypes
 
 #include <iostream>
 #include <vector>
@@ -12,7 +14,7 @@
 
 using namespace std;
 
-template<typename DataType, typename Frequency> class Hufftree
+template<typename DataType, typename Frequency> class Hufftree //The Huffman encoding tree data structure.
 {
 	public:
 		template<typename InputIterator>
@@ -41,7 +43,7 @@ template<typename DataType, typename Frequency> class Hufftree
 		class NodeOrder;
 };
 
-template<typename DataType, typename Frequency> struct Hufftree<DataType, Frequency>::Node
+template<typename DataType, typename Frequency> struct Hufftree<DataType, Frequency>::Node //The tree node data structure.
 {
 	Frequency frequency;
 	Node* leftChild;
@@ -79,7 +81,7 @@ template<typename DataType, typename Frequency> struct Hufftree<DataType, Freque
 	}
 
 	void fill(map<DataType, vector<bool> >& encoding,
-	vector<bool>& prefix)
+	vector<bool>& prefix) //Used to populate the node
 	{
 	if (leftChild)
 	{
@@ -97,7 +99,7 @@ template<typename DataType, typename Frequency> struct Hufftree<DataType, Freque
 template<typename DataType, typename Frequency>
 template<typename InputIterator>
 Hufftree<DataType, Frequency>::Hufftree(InputIterator begin, InputIterator end):
-tree(0)
+tree(0) //Used to populate the tree
 {
 	priority_queue<Node*, vector<Node*>, NodeOrder> pqueue;
 
@@ -130,7 +132,7 @@ tree(0)
 }
 
 template<typename DataType, typename Frequency>
-struct Hufftree<DataType, Frequency>::NodeOrder
+struct Hufftree<DataType, Frequency>::NodeOrder //Node ordering functions
 {
 	bool operator()(Node* a, Node* b)
 	{
@@ -160,7 +162,7 @@ struct Hufftree<DataType, Frequency>::NodeOrder
 
 template<typename DataType, typename Frequency>
 template<typename InputIterator>
-vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, InputIterator end)
+vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, InputIterator end) //Huffman encoding function
 {
 	vector<bool> result;
 	while (begin != end)
@@ -174,7 +176,7 @@ vector<bool> Hufftree<DataType, Frequency>::encode(InputIterator begin, InputIte
 
 template<typename DataType, typename Frequency>
 template<typename OutputIterator>
-void Hufftree<DataType, Frequency>::decode(vector<bool> const& v, OutputIterator iter)
+void Hufftree<DataType, Frequency>::decode(vector<bool> const& v, OutputIterator iter) //Huffman decoding function
 {
 	Node* node = tree;
 	for (vector<bool>::const_iterator i = v.begin(); i != v.end(); ++i)
@@ -188,20 +190,20 @@ void Hufftree<DataType, Frequency>::decode(vector<bool> const& v, OutputIterator
 	}
 }
 
-ostream& operator<<(ostream& os, vector<bool> vec)
+ostream& operator<<(ostream& os, vector<bool> vec) //stream output operator
 {
 	copy(vec.begin(), vec.end(), ostream_iterator<bool>(os, ""));
 	return os;
 }
 
-void mtf(string &word, string &list, map<char, double> &frequencies)
+void mtf(string &word, string &list, map<char, double> &frequencies) // Move-To-Front Transform
 {
 	int i, index;
 	for (i = 0; i != 256; i++)
 	{
 		string list1;
 		list1 = char(i);
-		frequencies[char(i)] = 0; //***
+		frequencies[char(i)] = 0;
 		list = list + list1;
 	}
 	
@@ -211,7 +213,7 @@ void mtf(string &word, string &list, map<char, double> &frequencies)
 		{
 			if (word[i] == list[index])
 		    {
-			    frequencies[word[i]]++; //frequencies[char(index)]++; //***
+			    frequencies[word[i]]++;
 				break;
 			}
 		}
@@ -222,16 +224,8 @@ void mtf(string &word, string &list, map<char, double> &frequencies)
 		}
 		list[0] = word[i];
 	}
-	
-	/*for (i = 0; i < 255; i++)
-	{
-	    if(frequencies[char(i)] == 0)
-	    {
-	        ; //delete entry for i from string &list, map<char, double> &frequencies.
-	    }
-	}*/
-	
-	//MTF encoding
+
+	//MTF encoding happens now
 	for (i = 0; i < word.length(); i++)
 	{
 		for (index = 0; index != 256 ; index++)
@@ -246,7 +240,7 @@ void mtf(string &word, string &list, map<char, double> &frequencies)
 	}
 }
 
-void bwt(string &word, string &bwt_word)
+void bwt(string &word, string &bwt_word) //Burrows-Wheeler Transform
 {
 	int len, i, j;
 	vector<string> rotations;
@@ -254,7 +248,7 @@ void bwt(string &word, string &bwt_word)
 	rotations.push_back(word);
 	len  = word.length();
 	
-	for (i = 1; i < len; i++)
+	for (i = 1; i < len; i++) //Rotations
 	{	
 		string rot_word;
 		rot_word.append(word.substr(i, len -1));
@@ -262,11 +256,11 @@ void bwt(string &word, string &bwt_word)
 		rotations.push_back (rot_word);
 	}
 	
-	sort (rotations.begin(), rotations.end());
+	sort (rotations.begin(), rotations.end()); //Sorting
 	
 	for(int i = 0; i < len; i++)
 	{
-		bwt_word += rotations[i][rotations[i].length()-1];
+		bwt_word += rotations[i][rotations[i].length()-1]; //Append to output
 	}
 }
 

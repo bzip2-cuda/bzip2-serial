@@ -1,3 +1,5 @@
+//Move-To-Front Transform and reverse
+
 # include <iostream>
 #include <iostream>
 #include <vector>
